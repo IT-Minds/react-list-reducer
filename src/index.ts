@@ -1,4 +1,4 @@
-import { Reducer, useReducer } from "react";
+import { Reducer } from "react";
 import "ts-array-ext";
 
 /**
@@ -38,10 +38,6 @@ export type AllListActions<T> =
 
 const isArray = <T>(t: T | T[]): t is Array<T> => {
   return Array.isArray(t);
-};
-
-const isntArray = <T>(t: T | T[]): t is T => {
-  return !isArray(t);
 };
 
 /**
