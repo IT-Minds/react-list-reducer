@@ -1,4 +1,4 @@
-import { Reducer } from "react";
+import { Reducer, useReducer } from "react";
 import "ts-array-ext";
 
 /**
@@ -61,7 +61,19 @@ export default <T>(key: keyof T): Reducer<T[], AllListActions<T>> => (
   switch (action.type) {
     case ListReducerActionType.AddOrUpdate:
       if (isArray(action.data)) {
-        // TODO map over.
+        const dataByKey = new Map<T[keyof T], T>();
+        action.data.forEach((dat) => {
+          dataByKey.set(dat[key], dat);
+        });
+        const updatedValues = state.map(value => {
+          const updatedValue = dataByKey.get(value[key]);
+          if(updatedValue){
+            dataByKey.delete(value[key]);
+            return updatedValue;
+          }
+          return value;
+        });
+        return [...updatedValues, ...dataByKey.values()];
       } else {
         const dat = action.data;
         const index = state.findIndex(i => i[key] === dat[key]);
