@@ -54,7 +54,7 @@ const isntArray = <T>(t: T | T[]): t is T => {
  * Where `Entity` is the type of the list and `"id"` is a property key on the type
  * that is to be used to find index in the list
  */
-export default <T>(key: keyof T): Reducer<T[], AllListActions<T>> => (
+const ListReducer = <T>(key: keyof T): Reducer<T[], AllListActions<T>> => (
   state: T[],
   action: AllListActions<T>
 ) => {
@@ -103,3 +103,5 @@ export default <T>(key: keyof T): Reducer<T[], AllListActions<T>> => (
       return state;
   }
 };
+
+export default ListReducer;
